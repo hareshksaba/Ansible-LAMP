@@ -1,0 +1,23 @@
+---
+# This role contains common plays that will run on all nodes.
+
+- name: Uninstall ntp 
+  apt: name=ntp state=absent
+
+- name: Uninstall php and git 
+  apt: name={{ item }} state=absent
+  with_items:
+   - php
+   - php-mysql
+   - git
+
+- name: Uninstall haproxy and socat
+  apt: name={{ item }} update_cache=yes state=absent
+  with_items:
+  - haproxy
+  - socat
+
+- name: Uninstall http and php etc
+  apt: name={{ item }} update_cache=yes state=absent
+  with_items:
+   - apache2

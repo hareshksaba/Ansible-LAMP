@@ -1,0 +1,37 @@
+---
+# This role installs mySQL and configures it.
+
+- name: Add the repository for MySql 5.6
+  become: yes
+  command: add-apt-repository 'deb http://archive.ubuntu.com/ubuntu trusty universe'
+
+- name: Update
+  become: yes
+  command: apt-get update
+
+- name: Install mysql
+  apt: pkg={{ item }} state=installed
+  become: true
+  with_items:    
+    - mysql-server
+    - mysql-client
+    - python-mysqldb
+    - libmysqlclient-dev
+
+- name : Ensure mysql started
+  become: yes
+  service: name=mysql state=started enabled=yes
+
+- name: Update MySQL root password for all root accounts
+  mysql_user: name={{ dbname }} 
+              host={{ item }} 
+              password={{ upassword }}
+              login_user={{ dbuser }}
+              login_password=""
+              state=present
+  with_items:
+    - 127.0.0.1
+    - ::1
+    - localhost
+  notify: 
+  - restart mysql
