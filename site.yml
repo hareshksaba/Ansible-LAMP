@@ -4,6 +4,7 @@
 # Apply common configuration to all hosts
 - hosts: all
   remote_user: haresh
+  become: true
   roles:
   - common
 
