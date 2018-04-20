@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('') {
+    stage('error') {
       steps {
-        sh 'ansible-playbook -i hosts -s -u user_name site.yml --ask-sudo-pass'
+        sh 'ssh haresh@192.168.56.101'
       }
     }
   }
