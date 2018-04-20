@@ -3,8 +3,6 @@
 
 # Apply common configuration to all hosts
 - hosts: all
-  remote_user: haresh
-  become: true
   roles:
   - common
 
@@ -12,20 +10,17 @@
 # the 'base-apache' role which simply sets up Apache, and 'web' which includes
 # our example web application.
 - hosts: webservers
-  remote_user: haresh
   roles:
   - base-apache
   - web
 
 # Configure and deploy the load balancer(s).
 - hosts: lbservers
-  remote_user: haresh
   roles:
   - haproxy
 
 # Configure and deploy the load balancer(s).
 - hosts: dbservers
-  remote_user: haresh
   roles:
   - db
 
